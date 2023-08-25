@@ -1,20 +1,20 @@
 package com.virajadiga.addtocart.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity(name = "cart")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Cart {
 
     @Id
@@ -23,22 +23,15 @@ public class Cart {
 
     @Column(name = "userId", updatable = false, nullable = false)
     private String userId;
+    private Set<UUID> cartProductIds = new HashSet<>();
 
-    private Set<Product> cartProducts;
-
-    public Cart(Long id, String userId){
-        this.id = id;
-        this.userId = userId;
-        this.cartProducts = new HashSet<>();
-    }
-
-    public boolean addProductToCart(Product product){
-        this.cartProducts.add(product);
+    public boolean addProductToCart(UUID productId){
+        this.cartProductIds.add(productId);
         return true;
     }
 
-    public boolean removeProductFromCart(Product product){
-        this.cartProducts.remove(product);
+    public boolean removeProductFromCart(UUID productId){
+        this.cartProductIds.remove(productId);
         return true;
     }
 }
