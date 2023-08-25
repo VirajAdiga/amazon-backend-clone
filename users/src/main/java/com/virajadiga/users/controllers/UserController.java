@@ -5,8 +5,6 @@ import com.virajadiga.users.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/users/")
 public class UserController {
@@ -19,8 +17,8 @@ public class UserController {
         return userService.addUser(user);
     }
 
-    @GetMapping("{userId}/")
-    public Optional<User> getUser(@PathVariable Long userId){
-        return userService.getUser(userId);
+    @GetMapping("{uniqueId}/")
+    public User getUser(@PathVariable String uniqueId){
+        return userService.getUser(uniqueId);
     }
 }
