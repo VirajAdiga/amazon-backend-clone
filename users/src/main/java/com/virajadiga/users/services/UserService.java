@@ -11,8 +11,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CartServiceProxy cartServiceProxy;
+
     public User addUser(User user){
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        cartServiceProxy.createCartForUser(savedUser.getUniqueId());
+        return savedUser;
     }
 
     public User getUser(String uniqueId){
